@@ -1,0 +1,90 @@
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brown: #623413;
+      --cream: #f5f5dc;
+      --white: #ffffff;
+    }
+    body {
+      background-color: var(--cream);
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: var(--white);
+    }
+    .logo img {
+      height: 50px;
+      width: 50px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .links a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: black;
+    }
+    .menu-section {
+      padding: 60px 0;
+    }
+    .wrapper {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid #ddd;
+      font-size: 1.1em;
+    }
+    .item-name {
+      font-weight: 600;
+      color: var(--brown);
+    }
+    .item-price {
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">
+      <img src="coffee-bar.jpg" alt="Die Kaffeebar logo">
+    </div>
+<div class="links">
+  <a href="getting started (2).html">Home</a>
+  <a href="visit-us.html">Visit Us</a>
+  <a href="contact-us.html">Contact Us</a>
+</div>
+  </nav>
+
+  <section class="menu-section">
+    <div class="wrapper">
+      <h2>Our Menu</h2>
+      <div class="menu-item">
+        <span class="item-name">Cappuccino</span>
+        <span class="item-price">€3.50</span>
+      </div>
+      <div class="menu-item">
+        <span class="item-name">Espresso</span>
+        <span class="item-price">€2.20</span>
+      </div>
+      <div class="menu-item">
+        <span class="item-name">Flat White</span>
+        <span class="item-price">€2.80</span>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

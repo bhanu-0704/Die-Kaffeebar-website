@@ -1,0 +1,203 @@
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brown: #623413;
+      --cream: #f5f5dc;
+      --white: #ffffff;
+    }
+
+    body {
+      background-color: var(--cream);
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: var(--white);
+    }
+
+    .logo img {
+      height: 50px;
+      width: 50px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .links a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: black;
+    }
+
+    .wrapper {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .location-section {
+      padding: 40px 0;
+      background-color: var(--white);
+    }
+
+    .location-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .contact-section {
+      padding: 30px 0 50px 0;
+      background-color: var(--cream);
+    }
+
+    .contact-section h2 {
+      margin-bottom: 20px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .contact-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .contact-item p {
+      margin: 0;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .contact-link {
+      color: #6f3511;
+      text-decoration: none;
+    }
+
+    .contact-link:hover {
+      text-decoration: underline;
+    }
+
+    .icon {
+      width: 28px;
+      height: 28px;
+      color: var(--brown);
+      flex-shrink: 0;
+    }
+
+    .contact-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--brown);
+      flex-shrink: 0;
+    }
+
+    .social-links {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 15px;
+      margin-left: 45px;
+    }
+
+    .facebook-link,
+    .instagram-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      padding: 0;
+      line-height: 0;
+    }
+
+    .facebook-icon,
+    .instagram-icon {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+
+    .address-link {
+      color: #6f3511;
+      text-decoration: none;
+    }
+
+    .address-link:hover {
+      color: #6f3511;
+      text-decoration: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">
+      <img src="coffee-bar.jpg" alt="Die Kaffeebar logo">
+    </div>
+<div class="links">
+  <a href="getting started (2).html">Home</a>
+  <a href="menu.html">Menu</a>
+  <a href="contact-us.html">Contact Us</a>
+</div>
+  </nav>
+
+  <section class="location-section">
+    <div class="wrapper">
+      <h2>Find Us</h2>
+      <div class="location-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 21s-7-7.5-7-12a7 7 0 0 1 14 0c0 4.5-7 12-7 12z"/>
+          <circle cx="12" cy="9" r="2.5"/>
+        </svg>
+        <a href="https://www.google.com/maps/place/DIE+KAFFEEBAR/@52.1387447,11.6408505,16z/data=!3m1!5s0x47af5f4e72b3bebb:0xa166b87e77ca514d!4m10!1m2!2m1!1scafes+near+me!3m6!1s0x47af5f4e0ce8f2bf:0x8f9c2daeaa95a3b8!8m2!3d52.1387447!4d11.6460003!15sCg1jYWZlcyBuZWFyIG1lIgOQAQFaDyINY2FmZXMgbmVhciBtZZIBC2NvZmZlZV9zaG9w4AEA!16s%2Fg%2F11csbfbb77"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="address-link">
+          Fakultät für Informatik, Gebäude 29<br>
+          Gustav-Adolf-Straße / Pfälzer Str.<br>
+          39106 Magdeburg
+        </a>
+      </div>
+
+      <div class="social-links">
+        <a href="https://www.facebook.com/diekaffeebar" target="_blank" rel="noopener noreferrer" class="facebook-link" aria-label="Visit Die Kaffeebar on Facebook">
+          <svg class="facebook-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.413c0-3.02 1.792-4.69 4.533-4.69 1.313 0 2.686.236 2.686.236v2.973h-1.515c-1.491 0-1.956.93-1.956 1.885v2.256h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+          </svg>
+        </a>
+        <a href="https://www.instagram.com/die_kaffeebar/?hl=en" target="_blank" rel="noopener noreferrer" class="instagram-link" aria-label="Visit us on Instagram">
+          <svg class="instagram-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 2.163c3.204 0 3.584.012 4.849.07 1.17.054 1.97.24 2.673.453a5.403 5.403 0 0 1 1.95 1.13 5.403 5.403 0 0 1 1.13 1.95c.213.703.399 1.503.453 2.673.058 1.265.07 1.645.07 4.849s-.012 3.584-.07 4.849c-.054 1.17-.24 1.97-.453 2.673a5.403 5.403 0 0 1-1.13 1.95 5.403 5.403 0 0 1-1.95 1.13c-.703.213-1.503.399-2.673.453-1.265.058-1.645.07-4.849.07s-3.584-.012-4.849-.07c-1.17-.054-1.97-.24-2.673-.453a5.403 5.403 0 0 1-1.95-1.13 5.403 5.403 0 0 1-1.13-1.95c-.213-.703-.399-1.503-.453-2.673C.175 15.584.163 15.204.163 12s.012-3.584.07-4.849c.054-1.17.24-1.97.453-2.673a5.403 5.403 0 0 1 1.13-1.95 5.403 5.403 0 0 1 1.95-1.13c.703-.213 1.503-.399 2.673-.453C8.416 2.175 8.796 2.163 12 2.163zm0 1.622c-3.148 0-3.52.012-4.773.069-1.151.053-1.776.245-2.19.408a3.78 3.78 0 0 0-1.396.81 3.78 3.78 0 0 0-.81 1.396c-.163.414-.355 1.039-.408 2.19-.057 1.253-.069 1.625-.069 4.773s.012 3.52.069 4.773c.053 1.151.245 1.776.408 2.19.191.525.49.999.81 1.396.397.32.871.619 1.396.81.414.163 1.039.355 2.19.408 1.253.057 1.625.069 4.773.069s3.52-.012 4.773-.069c1.151-.053 1.776-.245 2.19-.408a3.78 3.78 0 0 0 1.396-.81 3.78 3.78 0 0 0 .81-1.396c.163-.414.355-1.039.408-2.19.057-1.253.069-1.625.069-4.773s-.012-3.52-.069-4.773c-.053-1.151-.245-1.776-.408-2.19a3.78 3.78 0 0 0-.81-1.396 3.78 3.78 0 0 0-1.396-.81c-.414-.163-1.039-.355-2.19-.408-1.253-.057-1.625-.069-4.773-.069zm0 3.905a4.31 4.31 0 1 1 0 8.62 4.31 4.31 0 0 1 0-8.62zm0 7.098a2.788 2.788 0 1 0 0-5.576 2.788 2.788 0 0 0 0 5.576zm5.48-7.482a1.008 1.008 0 1 1-2.016 0 1.008 1.008 0 0 1 2.016 0z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+
+</body>
+</html>
