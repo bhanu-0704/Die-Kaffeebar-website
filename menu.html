@@ -42,9 +42,14 @@
     .menu-item {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       padding: 16px 0;
       border-bottom: 1px solid #ddd;
       font-size: 1.1em;
+    }
+    .item-info {
+      display: flex;
+      flex-direction: column;
     }
     .item-name {
       font-weight: 600;
@@ -52,6 +57,70 @@
     }
     .item-price {
       color: #555;
+      font-size: 0.9em;
+      margin-top: 4px;
+    }
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .qty-btn {
+      width: 32px;
+      height: 32px;
+      border: none;
+      border-radius: 50%;
+      background-color: var(--brown);
+      color: var(--white);
+      font-size: 1.2em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      transition: background-color 0.2s ease;
+    }
+    .qty-btn:hover {
+      background-color: #4a2710;
+    }
+    .qty-count {
+      min-width: 20px;
+      text-align: center;
+      font-weight: 600;
+      color: var(--brown);
+    }
+    .order-summary {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 2px solid var(--brown);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.2em;
+      font-weight: 700;
+      color: var(--brown);
+    }
+    .order-btn {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px 0;
+      background-color: var(--brown);
+      color: var(--white);
+      text-align: center;
+      font-size: 1.1em;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .order-btn:hover {
+      background-color: #4a2710;
+    }
+    .order-btn:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
     }
   </style>
 </head>
@@ -61,30 +130,90 @@
     <div class="logo">
       <img src="coffee-bar.jpg" alt="Die Kaffeebar logo">
     </div>
-<div class="links">
-  <a href="index.html">Home</a>
-  <a href="visit-us.html">Visit Us</a>
-  <a href="contact-us.html">Contact Us</a>
-</div>
+    <div class="links">
+      <a href="index.html">Home</a>
+      <a href="visit-us.html">Visit Us</a>
+      <a href="contact-us.html">Contact Us</a>
+    </div>
   </nav>
 
   <section class="menu-section">
     <div class="wrapper">
       <h2>Our Menu</h2>
-      <div class="menu-item">
-        <span class="item-name">Cappuccino</span>
-        <span class="item-price">€3.50</span>
+
+      <div class="menu-item" data-price="3.50">
+        <div class="item-info">
+          <span class="item-name">Cappuccino</span>
+          <span class="item-price">€3.50</span>
+        </div>
+        <div class="qty-controls">
+          <span class="qty-count">0</span>
+          <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+        </div>
       </div>
-      <div class="menu-item">
-        <span class="item-name">Espresso</span>
-        <span class="item-price">€2.20</span>
+
+      <div class="menu-item" data-price="2.20">
+        <div class="item-info">
+          <span class="item-name">Espresso</span>
+          <span class="item-price">€2.20</span>
+        </div>
+        <div class="qty-controls">
+          <span class="qty-count">0</span>
+          <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+        </div>
       </div>
-      <div class="menu-item">
-        <span class="item-name">Flat White</span>
-        <span class="item-price">€2.80</span>
+
+      <div class="menu-item" data-price="2.80">
+        <div class="item-info">
+          <span class="item-name">Flat White</span>
+          <span class="item-price">€2.80</span>
+        </div>
+        <div class="qty-controls">
+          <span class="qty-count">0</span>
+          <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+        </div>
       </div>
+
+      <div class="order-summary">
+        <span>Total:</span>
+        <span id="total-price">€0.00</span>
+      </div>
+
+      <button class="order-btn" id="order-btn" onclick="goToPayment()" disabled>Order</button>
     </div>
   </section>
+
+  <script>
+    function changeQty(button, delta) {
+      const menuItem = button.closest('.menu-item');
+      const qtySpan = menuItem.querySelector('.qty-count');
+      let qty = parseInt(qtySpan.textContent);
+      qty = Math.max(0, qty + delta);
+      qtySpan.textContent = qty;
+      updateTotal();
+    }
+
+    function updateTotal() {
+      const items = document.querySelectorAll('.menu-item');
+      let total = 0;
+      items.forEach(item => {
+        const price = parseFloat(item.dataset.price);
+        const qty = parseInt(item.querySelector('.qty-count').textContent);
+        total += price * qty;
+      });
+      document.getElementById('total-price').textContent = '€' + total.toFixed(2);
+
+      const orderBtn = document.getElementById('order-btn');
+      orderBtn.disabled = total === 0;
+    }
+
+    function goToPayment() {
+      const total = document.getElementById('total-price').textContent.replace('€', '');
+      // Replace 'diekaffeebar' with the real PayPal.me username once the owner sets one up
+      const paypalUsername = 'diekaffeebar';
+      window.location.href = `https://www.paypal.com/paypalme/${paypalUsername}/${total}EUR`;
+    }
+  </script>
 
 </body>
 </html>
