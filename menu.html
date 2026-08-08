@@ -2,6 +2,7 @@
 <head>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id=AclwA-p_6LX08IBTGTOu7L2dVxyoCZyk57nGFTH7VnRWM-Z3BnZiV4oc1Ch8iIDuMQ6nN28lLRMWZDDO&currency=EUR"></script>
   <style>
     :root {
       --brown: #623413;
@@ -118,33 +119,21 @@
       font-weight: 700;
       color: var(--brown);
     }
-    .order-btn {
-      display: block;
-      width: 100%;
+    #paypal-button-container {
       margin-top: 20px;
-      padding: 14px 0;
-      background-color: var(--brown);
-      color: var(--white);
-      text-align: center;
-      font-size: 1.1em;
-      font-weight: 600;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
-    .order-btn:hover {
-      background-color: #4a2710;
-    }
-    .order-btn:disabled {
-      background-color: #aaa;
-      cursor: not-allowed;
     }
     .status-msg {
       margin-top: 12px;
       text-align: center;
       font-size: 0.95em;
       color: var(--brown);
+    }
+    .select-table-warning {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 0.95em;
+      color: #b03a2e;
+      display: none;
     }
   </style>
 </head>
@@ -157,7 +146,7 @@
     <div class="links">
       <a href="index.html">Home</a>
       <a href="visit-us.html">Visit Us</a>
-      <a href="contact-us.html">Contact Us</a>
+      <a href="about.html">About</a>
     </div>
   </nav>
 
@@ -220,13 +209,13 @@
         <span id="total-price">€0.00</span>
       </div>
 
-      <button class="order-btn" id="order-btn" onclick="submitOrder()" disabled>Order</button>
+      <div id="paypal-button-container"></div>
+      <div class="select-table-warning" id="table-warning">Please select a table number before paying.</div>
       <div class="status-msg" id="status-msg"></div>
     </div>
   </section>
 
   <script>
-    // Initialize EmailJS with your Public Key
     emailjs.init("E_6aqWSN9LFzMv6c1");
 
     function changeQty(button, delta) {
@@ -238,27 +227,7 @@
       updateTotal();
     }
 
-    function updateTotal() {
-      const items = document.querySelectorAll('.menu-item');
-      let total = 0;
-      items.forEach(item => {
-        const price = parseFloat(item.dataset.price);
-        const qty = parseInt(item.querySelector('.qty-count').textContent);
-        total += price * qty;
-      });
-      document.getElementById('total-price').textContent = '€' + total.toFixed(2);
-
-      const orderBtn = document.getElementById('order-btn');
-      orderBtn.disabled = total === 0;
-    }
-
-    function submitOrder() {
-      const tableNumber = document.getElementById('table-number').value;
-      if (!tableNumber) {
-        document.getElementById('status-msg').textContent = 'Please select a table number first.';
-        return;
-      }
-
+    function getOrderDetails() {
       const items = document.querySelectorAll('.menu-item');
       let orderDetails = '';
       let total = 0;
@@ -271,24 +240,68 @@
           total += price * qty;
         }
       });
-
-      document.getElementById('status-msg').textContent = 'Sending order...';
-
-      emailjs.send('service_fmzjx77', 'template_ox63u36', {
-        table_number: tableNumber,
-        order_details: orderDetails,
-        total_price: '€' + total.toFixed(2)
-      }).then(function() {
-        document.getElementById('status-msg').textContent = 'Order sent! Redirecting to payment...';
-        setTimeout(() => {
-          const paypalUsername = 'diekaffeebar';
-          window.location.href = `https://www.paypal.com/paypalme/${paypalUsername}/${total.toFixed(2)}EUR`;
-        }, 1500);
-      }, function(error) {
-        document.getElementById('status-msg').textContent = 'Something went wrong sending the order. Please try again.';
-        console.error(error);
-      });
+      return { orderDetails, total };
     }
+
+    function updateTotal() {
+      const { total } = getOrderDetails();
+      document.getElementById('total-price').textContent = '€' + total.toFixed(2);
+    }
+
+    // Render the PayPal button once the page loads
+    paypal.Buttons({
+      createOrder: function(data, actions) {
+        const { total } = getOrderDetails();
+        const tableNumber = document.getElementById('table-number').value;
+
+        if (!tableNumber) {
+          document.getElementById('table-warning').style.display = 'block';
+          return actions.reject();
+        }
+        document.getElementById('table-warning').style.display = 'none';
+
+        if (total === 0) {
+          document.getElementById('status-msg').textContent = 'Please add at least one item first.';
+          return actions.reject();
+        }
+
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: total.toFixed(2),
+              currency_code: 'EUR'
+            }
+          }]
+        });
+      },
+
+      onApprove: function(data, actions) {
+        // This only runs AFTER PayPal confirms the payment succeeded
+        return actions.order.capture().then(function(details) {
+          const { orderDetails, total } = getOrderDetails();
+          const tableNumber = document.getElementById('table-number').value;
+
+          document.getElementById('status-msg').textContent = 'Payment successful! Sending order to the café...';
+
+          emailjs.send('service_fmzjx77', 'template_ox63u36', {
+            table_number: tableNumber,
+            order_details: orderDetails,
+            total_price: '€' + total.toFixed(2)
+          }).then(function() {
+            document.getElementById('status-msg').textContent = 'Payment confirmed and order sent! Thank you.';
+          }, function(error) {
+            document.getElementById('status-msg').textContent = 'Payment succeeded, but the order email failed to send. Please tell staff your table number.';
+            console.error(error);
+          });
+        });
+      },
+
+      onError: function(err) {
+        document.getElementById('status-msg').textContent = 'Something went wrong with the payment. Please try again.';
+        console.error(err);
+      }
+
+    }).render('#paypal-button-container');
   </script>
 
 </body>
