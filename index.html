@@ -9,6 +9,46 @@
   --white: #ffffff;
 }
 
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Nav link underline hover */
+.links a {
+  position: relative;
+}
+
+.links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background-color: var(--brown);
+  transition: width 0.3s ease;
+}
+
+.links a:hover::after {
+  width: 100%;
+}
+
+/* Espresso photo zoom on hover */
+.espresso-img {
+  transition: transform 0.4s ease;
+}
+
+.espresso-img:hover {
+  transform: scale(1.05);
+}
+
 body {
   background-color: var(--cream);
   font-family: 'Poppins', sans-serif;
@@ -113,6 +153,10 @@ body {
   text-align: center;
 }
 
+.about-section h2 {
+  color: var(--brown);
+}
+
 .about-section p {
   font-size: 1.2em;
   color: #333;
@@ -121,6 +165,21 @@ body {
   margin: 0 auto;
 }
 
+.about-btn {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 12px 28px;
+  background-color: var(--brown);
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.about-btn:hover {
+  background-color: #4a2710;
+}
 .location-item {
   display: flex;
   align-items: flex-start;
@@ -271,38 +330,43 @@ td {
 <div class="links">
   <a href="menu.html">Menu</a>
   <a href="visit-us.html">Visit Us</a>
-  <a href="contact-us.html">Contact Us</a>
+  <a href="about.html">About</a>
 </div>
   </nav>
 
  
    <header class="hero">
-  <div class="hero-text">
+  <div class="hero-text fade-in">
     <h1 class="shop-title">Die Kaffeebar</h1>
-    <p>Good Coffee, right on Campus</p>
+    <p><i>Campus. Kaffee. Klarer Kopf.</i></p>
   </div>
   
-  <div class="hero-image">
+  <div class="hero-image fade-in">
     <img src="hero-coffee.png" alt="Freshly made coffee">
   </div>
 </div>
 </header>
 
-<section class="about-section">
+<section class="about-section fade-in">
   <div class="wrapper">
-    <h2>Über uns</h2>
-    <p>Die Kaffeebar bietet seinen Gästen in gemütlicher Atmosphäre feinsten italienischen Kaffeegenuss.</p>
-  <figure class="espresso-figure">
-      <img src="espresso.jpg" alt="Frisch zubereiteter Espresso" class="espresso-img">
-      <figcaption>Einfach kaffeeschön!!</figcaption>
-    </figure>
-  
+    <h2>Mehr als nur Kaffee</h2>
+    <p>Dein Lieblingsplatz für Koffein und Konversation — Die Kaffeebar ist dein Treffpunkt zwischen den Vorlesungen.</p>
+    <a href="about.html" class="about-btn">Mehr über uns</a>
   </div>
 </section>
-  
 
- 
-</header>
+<script>
+  const fadeEls = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  fadeEls.forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
