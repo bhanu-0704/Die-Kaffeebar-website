@@ -34,6 +34,22 @@
       margin-left: 20px;
       text-decoration: none;
       color: black;
+      position: relative;
+    }
+
+    .links a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0%;
+      height: 2px;
+      background-color: var(--brown);
+      transition: width 0.3s ease;
+    }
+
+    .links a:hover::after {
+      width: 100%;
     }
 
     .wrapper {
@@ -139,16 +155,29 @@
       text-decoration: none;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+.find-us-header h2 {
+  margin: 0 0 16px 0;
+}
 
-    td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: center;
-    }
+.location-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+.hours-day {
+  font-weight: 600;
+  color: #6f3511;
+}
+
+.hours-time {
+  color: #6f3511;
+}
+.hours-box {
+  text-align: right;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
   </style>
 </head>
 <body>
@@ -157,17 +186,20 @@
     <div class="logo">
       <img src="coffee-bar.jpg" alt="Die Kaffeebar logo">
     </div>
-    
-<div class="links">
-  <a href="index.html">Home</a>
-  <a href="menu.html">Menu</a>
-  <a href="contact-us.html">Contact Us</a>
-</div>
+    <div class="links">
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="about.html">About</a>
+    </div>
   </nav>
 
-  <section class="location-section">
-    <div class="wrapper">
+<section class="location-section">
+  <div class="wrapper">
+    <div class="find-us-header">
       <h2>Find Us</h2>
+    </div>
+
+    <div class="location-row">
       <div class="location-item">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 21s-7-7.5-7-12a7 7 0 0 1 14 0c0 4.5-7 12-7 12z"/>
@@ -183,22 +215,57 @@
         </a>
       </div>
 
-      <div class="social-links">
-        <a href="https://www.facebook.com/diekaffeebar" target="_blank" rel="noopener noreferrer" class="facebook-link" aria-label="Visit Die Kaffeebar on Facebook">
-          <svg class="facebook-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.413c0-3.02 1.792-4.69 4.533-4.69 1.313 0 2.686.236 2.686.236v2.973h-1.515c-1.491 0-1.956.93-1.956 1.885v2.256h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
-          </svg>
-        </a>
-        <a href="https://www.instagram.com/die_kaffeebar/?hl=en" target="_blank" rel="noopener noreferrer" class="instagram-link" aria-label="Visit us on Instagram">
-          <svg class="instagram-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M12 2.163c3.204 0 3.584.012 4.849.07 1.17.054 1.97.24 2.673.453a5.403 5.403 0 0 1 1.95 1.13 5.403 5.403 0 0 1 1.13 1.95c.213.703.399 1.503.453 2.673.058 1.265.07 1.645.07 4.849s-.012 3.584-.07 4.849c-.054 1.17-.24 1.97-.453 2.673a5.403 5.403 0 0 1-1.13 1.95 5.403 5.403 0 0 1-1.95 1.13c-.703.213-1.503.399-2.673.453-1.265.058-1.645.07-4.849.07s-3.584-.012-4.849-.07c-1.17-.054-1.97-.24-2.673-.453a5.403 5.403 0 0 1-1.95-1.13 5.403 5.403 0 0 1-1.13-1.95c-.213-.703-.399-1.503-.453-2.673C.175 15.584.163 15.204.163 12s.012-3.584.07-4.849c.054-1.17.24-1.97.453-2.673a5.403 5.403 0 0 1 1.13-1.95 5.403 5.403 0 0 1 1.95-1.13c.703-.213 1.503-.399 2.673-.453C8.416 2.175 8.796 2.163 12 2.163zm0 1.622c-3.148 0-3.52.012-4.773.069-1.151.053-1.776.245-2.19.408a3.78 3.78 0 0 0-1.396.81 3.78 3.78 0 0 0-.81 1.396c-.163.414-.355 1.039-.408 2.19-.057 1.253-.069 1.625-.069 4.773s.012 3.52.069 4.773c.053 1.151.245 1.776.408 2.19.191.525.49.999.81 1.396.397.32.871.619 1.396.81.414.163 1.039.355 2.19.408 1.253.057 1.625.069 4.773.069s3.52-.012 4.773-.069c1.151-.053 1.776-.245 2.19-.408a3.78 3.78 0 0 0 1.396-.81 3.78 3.78 0 0 0 .81-1.396c.163-.414.355-1.039.408-2.19.057-1.253.069-1.625.069-4.773s-.012-3.52-.069-4.773c-.053-1.151-.245-1.776-.408-2.19a3.78 3.78 0 0 0-.81-1.396 3.78 3.78 0 0 0-1.396-.81c-.414-.163-1.039-.355-2.19-.408-1.253-.057-1.625-.069-4.773-.069zm0 3.905a4.31 4.31 0 1 1 0 8.62 4.31 4.31 0 0 1 0-8.62zm0 7.098a2.788 2.788 0 1 0 0-5.576 2.788 2.788 0 0 0 0 5.576zm5.48-7.482a1.008 1.008 0 1 1-2.016 0 1.008 1.008 0 0 1 2.016 0z"/>
-          </svg>
-        </a>
+      <div class="hours-box">
+        <div class="hours-row">
+          <span class="hours-day">Mon–Thu</span>
+          <span class="hours-time">11 AM – 4 PM</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Fri</span>
+          <span class="hours-time">11 AM – 3 PM</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="social-links">
+      <a href="https://www.facebook.com/diekaffeebar" target="_blank" rel="noopener noreferrer" class="facebook-link" aria-label="Visit Die Kaffeebar on Facebook">
+        <svg class="facebook-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.413c0-3.02 1.792-4.69 4.533-4.69 1.313 0 2.686.236 2.686.236v2.973h-1.515c-1.491 0-1.956.93-1.956 1.885v2.256h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+        </svg>
+      </a>
+      <a href="https://www.instagram.com/die_kaffeebar/?hl=en" target="_blank" rel="noopener noreferrer" class="instagram-link" aria-label="Visit us on Instagram">
+        <svg class="instagram-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M12 2.163c3.204 0 3.584.012 4.849.07 1.17.054 1.97.24 2.673.453a5.403 5.403 0 0 1 1.95 1.13 5.403 5.403 0 0 1 1.13 1.95c.213.703.399 1.503.453 2.673.058 1.265.07 1.645.07 4.849s-.012 3.584-.07 4.849c-.054 1.17-.24 1.97-.453 2.673a5.403 5.403 0 0 1-1.13 1.95 5.403 5.403 0 0 1-1.95 1.13c-.703.213-1.503.399-2.673.453-1.265.058-1.645.07-4.849.07s-3.584-.012-4.849-.07c-1.17-.054-1.97-.24-2.673-.453a5.403 5.403 0 0 1-1.95-1.13 5.403 5.403 0 0 1-1.13-1.95c-.213-.703-.399-1.503-.453-2.673C.175 15.584.163 15.204.163 12s.012-3.584.07-4.849c.054-1.17.24-1.97.453-2.673a5.403 5.403 0 0 1 1.13-1.95 5.403 5.403 0 0 1 1.95-1.13c.703-.213 1.503-.399 2.673-.453C8.416 2.175 8.796 2.163 12 2.163zm0 1.622c-3.148 0-3.52.012-4.773.069-1.151.053-1.776.245-2.19.408a3.78 3.78 0 0 0-1.396.81 3.78 3.78 0 0 0-.81 1.396c-.163.414-.355 1.039-.408 2.19-.057 1.253-.069 1.625-.069 4.773s.012 3.52.069 4.773c.053 1.151.245 1.776.408 2.19.191.525.49.999.81 1.396.397.32.871.619 1.396.81.414.163 1.039.355 2.19.408 1.253.057 1.625.069 4.773.069s3.52-.012 4.773-.069c1.151-.053 1.776-.245 2.19-.408a3.78 3.78 0 0 0 1.396-.81 3.78 3.78 0 0 0 .81-1.396c.163-.414.355-1.039.408-2.19.057-1.253.069-1.625.069-4.773s-.012-3.52-.069-4.773c-.053-1.151-.245-1.776-.408-2.19a3.78 3.78 0 0 0-.81-1.396 3.78 3.78 0 0 0-1.396-.81c-.414-.163-1.039-.355-2.19-.408-1.253-.057-1.625-.069-4.773-.069zm0 3.905a4.31 4.31 0 1 1 0 8.62 4.31 4.31 0 0 1 0-8.62zm0 7.098a2.788 2.788 0 1 0 0-5.576 2.788 2.788 0 0 0 0 5.576zm5.48-7.482a1.008 1.008 0 1 1-2.016 0 1.008 1.008 0 0 1 2.016 0z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+    
+  </div>
+</section>
+
+    
+
+  <section class="contact-section">
+    <div class="wrapper">
+      <h2>Contact Info</h2>
+      <div class="contact-item">
+        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        <p><a href="tel:+491794834719" class="contact-link">0179 4834719</a></p>
+      </div>
+      <div class="contact-item">
+        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        <p><a href="mailto:die-kaffeebar@web.de" class="contact-link">die-kaffeebar@web.de</a></p>
       </div>
     </div>
   </section>
-
-
 
 </body>
 </html>
