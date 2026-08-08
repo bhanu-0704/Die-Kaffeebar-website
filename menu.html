@@ -1,13 +1,13 @@
 <html>
 <head>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <style>
     :root {
       --brown: #623413;
       --cream: #f5f5dc;
       --white: #ffffff;
     }
-    
     body {
       background-color: var(--cream);
       font-family: 'Poppins', sans-serif;
@@ -90,8 +90,25 @@
       font-weight: 600;
       color: var(--brown);
     }
-    .order-summary {
+    .table-select {
       margin-top: 30px;
+    }
+    .table-select label {
+      display: block;
+      font-weight: 600;
+      color: var(--brown);
+      margin-bottom: 8px;
+    }
+    .table-select select {
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-family: 'Poppins', sans-serif;
+    }
+    .order-summary {
+      margin-top: 20px;
       padding-top: 20px;
       border-top: 2px solid var(--brown);
       display: flex;
@@ -123,6 +140,12 @@
       background-color: #aaa;
       cursor: not-allowed;
     }
+    .status-msg {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 0.95em;
+      color: var(--brown);
+    }
   </style>
 </head>
 <body>
@@ -142,7 +165,7 @@
     <div class="wrapper">
       <h2>Our Menu</h2>
 
-      <div class="menu-item" data-price="3.50">
+      <div class="menu-item" data-name="Cappuccino" data-price="3.50">
         <div class="item-info">
           <span class="item-name">Cappuccino</span>
           <span class="item-price">€3.50</span>
@@ -153,7 +176,7 @@
         </div>
       </div>
 
-      <div class="menu-item" data-price="2.20">
+      <div class="menu-item" data-name="Espresso" data-price="2.20">
         <div class="item-info">
           <span class="item-name">Espresso</span>
           <span class="item-price">€2.20</span>
@@ -164,7 +187,7 @@
         </div>
       </div>
 
-      <div class="menu-item" data-price="2.80">
+      <div class="menu-item" data-name="Flat White" data-price="2.80">
         <div class="item-info">
           <span class="item-name">Flat White</span>
           <span class="item-price">€2.80</span>
@@ -175,16 +198,37 @@
         </div>
       </div>
 
+      <div class="table-select">
+        <label for="table-number">Table Number</label>
+        <select id="table-number">
+          <option value="">Select your table</option>
+          <option value="1">Table 1</option>
+          <option value="2">Table 2</option>
+          <option value="3">Table 3</option>
+          <option value="4">Table 4</option>
+          <option value="5">Table 5</option>
+          <option value="6">Table 6</option>
+          <option value="7">Table 7</option>
+          <option value="8">Table 8</option>
+          <option value="9">Table 9</option>
+          <option value="10">Table 10</option>
+        </select>
+      </div>
+
       <div class="order-summary">
         <span>Total:</span>
         <span id="total-price">€0.00</span>
       </div>
 
-      <button class="order-btn" id="order-btn" onclick="goToPayment()" disabled>Order</button>
+      <button class="order-btn" id="order-btn" onclick="submitOrder()" disabled>Order</button>
+      <div class="status-msg" id="status-msg"></div>
     </div>
   </section>
 
   <script>
+    // Initialize EmailJS with your Public Key
+    emailjs.init("E_6aqWSN9LFzMv6c1");
+
     function changeQty(button, delta) {
       const menuItem = button.closest('.menu-item');
       const qtySpan = menuItem.querySelector('.qty-count');
@@ -208,11 +252,42 @@
       orderBtn.disabled = total === 0;
     }
 
-    function goToPayment() {
-      const total = document.getElementById('total-price').textContent.replace('€', '');
-      // Replace 'diekaffeebar' with the real PayPal.me username once the owner sets one up
-      const paypalUsername = 'diekaffeebar';
-      window.location.href = `https://www.paypal.com/paypalme/${paypalUsername}/${total}EUR`;
+    function submitOrder() {
+      const tableNumber = document.getElementById('table-number').value;
+      if (!tableNumber) {
+        document.getElementById('status-msg').textContent = 'Please select a table number first.';
+        return;
+      }
+
+      const items = document.querySelectorAll('.menu-item');
+      let orderDetails = '';
+      let total = 0;
+      items.forEach(item => {
+        const qty = parseInt(item.querySelector('.qty-count').textContent);
+        if (qty > 0) {
+          const name = item.dataset.name;
+          const price = parseFloat(item.dataset.price);
+          orderDetails += `${name} x${qty} (€${(price * qty).toFixed(2)})\n`;
+          total += price * qty;
+        }
+      });
+
+      document.getElementById('status-msg').textContent = 'Sending order...';
+
+      emailjs.send('service_fmzjx77', 'template_ox63u36', {
+        table_number: tableNumber,
+        order_details: orderDetails,
+        total_price: '€' + total.toFixed(2)
+      }).then(function() {
+        document.getElementById('status-msg').textContent = 'Order sent! Redirecting to payment...';
+        setTimeout(() => {
+          const paypalUsername = 'diekaffeebar';
+          window.location.href = `https://www.paypal.com/paypalme/${paypalUsername}/${total.toFixed(2)}EUR`;
+        }, 1500);
+      }, function(error) {
+        document.getElementById('status-msg').textContent = 'Something went wrong sending the order. Please try again.';
+        console.error(error);
+      });
     }
   </script>
 
