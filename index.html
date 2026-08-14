@@ -19,7 +19,44 @@
   opacity: 1;
   transform: translateY(0);
 }
+/* Steam animation */
+.steam-wrap {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
 
+.steam {
+  position: absolute;
+  bottom: 85%;
+  width: 6px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 50%;
+  filter: blur(4px);
+  opacity: 0;
+  animation: rise 3s ease-in infinite;
+}
+
+.steam1 { left: 42%; animation-delay: 0s; }
+.steam2 { left: 50%; animation-delay: 1s; }
+.steam3 { left: 58%; animation-delay: 2s; }
+
+@keyframes rise {
+  0%   { opacity: 0; transform: translateY(0) scale(1); }
+  20%  { opacity: 0.6; }
+  100% { opacity: 0; transform: translateY(-60px) scale(1.4); }
+}
+
+/* Typing effect */
+.typing-text::after {
+  content: '|';
+  animation: blink 0.8s step-end infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
 /* Nav link underline hover */
 .links a {
   position: relative;
@@ -338,12 +375,18 @@ td {
    <header class="hero">
   <div class="hero-text fade-in">
     <h1 class="shop-title">Die Kaffeebar</h1>
-    <p><i>Campus. Kaffee. Klarer Kopf.</i></p>
+    <p id="typing-tagline" class="typing-text"></p>
   </div>
   
   <div class="hero-image fade-in">
-    <img src="hero-coffee.png" alt="Freshly made coffee">
+    <div class="steam-wrap">
+      <span class="steam steam1"></span>
+      <span class="steam steam2"></span>
+      <span class="steam steam3"></span>
+      <img src="hero-coffee.png" alt="Freshly made coffee">
+    </div>
   </div>
+</header>
 </div>
 </header>
 
@@ -366,6 +409,34 @@ td {
   }, { threshold: 0.15 });
 
   fadeEls.forEach(el => observer.observe(el));
+</script>
+<script>
+  const fadeEls = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  fadeEls.forEach(el => observer.observe(el));
+</script>
+
+<script>
+  const tagline = "Good Coffee, right on Campus";
+  const taglineEl = document.getElementById('typing-tagline');
+  let i = 0;
+
+  function typeTagline() {
+    if (i < tagline.length) {
+      taglineEl.textContent += tagline.charAt(i);
+      i++;
+      setTimeout(typeTagline, 60);
+    }
+  }
+
+  typeTagline();
 </script>
 
 </body>
